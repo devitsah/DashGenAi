@@ -1,0 +1,20 @@
+<header class="workspace-header">
+
+  <div class="header-meta-group">
+    <h1 class="header-title">Dashboards</h1>
+    <span class="count-badge" *ngIf="count > 0" aria-label="Total dashboard count">
+      {{ count }}
+    </span>
+  </div>
+
+  <div class="header-action-group">
+    <button
+      class="btn btn-primary"
+      routerLink="/homepage/AIBuilder"
+      aria-label="Create a new dashboard">
+      <span class="btn-symbol">+</span>
+      <span>New Dashboard</span>
+    </button>
+  </div>
+
+</header>

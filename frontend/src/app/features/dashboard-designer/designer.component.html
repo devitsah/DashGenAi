@@ -1,0 +1,53 @@
+<div class="builder-container">
+  <header class="builder-header">
+    <div class="header-left-node">
+      <button class="btn btn-icon-back" routerLink="/homepage/DashboardHome" routerLinkActive="active" title="Return to Dashboard Inventory">
+        ←
+      </button>
+      <h1 class="builder-title">AI Dashboard Builder</h1>
+    </div>
+    <div class="step-metrics">
+      <span class="metrics-accent">Step {{ currentStep + 1 }}</span>
+      <span class="metrics-separator"> / </span>
+      <span class="metrics-total">{{ steps.length }}</span>
+    </div>
+  </header>
+
+  <nav class="stepper-subbar" aria-label="Progress pipeline steps">
+    <div
+      *ngFor="let step of steps; let i = index"
+      class="stepper-node"
+      [class.active]="i === currentStep"
+      [class.completed]="i < currentStep"
+    >
+      <span class="node-index">{{ i + 1 }}</span>
+      <span class="node-label">{{ step }}</span>
+      <span *ngIf="i < steps.length - 1" class="node-connector">→</span>
+    </div>
+  </nav>
+
+  <main class="builder-content-viewport" [class.dark-canvas]="currentStep === 2 && state.style() === 'grafana'">
+    <div class="viewport-card-wrapper" [class.dark-canvas]="currentStep === 2 && state.style() === 'grafana'">
+      <app-style *ngIf="currentStep === 0"></app-style>
+      <app-datasource *ngIf="currentStep === 1"></app-datasource>
+      <app-preview *ngIf="currentStep === 2"></app-preview>
+    </div>
+  </main>
+
+  <footer class="builder-footer-actions">
+    <div class="footer-action-alignment">
+      <button
+        *ngIf="currentStep > 0"
+        class="btn btn-secondary"
+        (click)="back()">
+        Back
+      </button>
+      <button
+        class="btn btn-primary"
+        [disabled]="!canContinue()"
+        (click)="continue()">
+        {{ currentStep === steps.length - 1 ? 'Commit' : 'Continue' }}
+      </button>
+    </div>
+  </footer>
+</div>

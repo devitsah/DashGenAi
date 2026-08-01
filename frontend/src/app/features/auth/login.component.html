@@ -1,0 +1,41 @@
+<div class="auth-page">
+  <div class="auth-card card">
+    <h2>Sign in</h2>
+
+    <p class="subtitle">
+      Welcome back. Enter your details to continue.
+    </p>
+
+    <label>Email</label>
+    <input
+      type="email"
+      [(ngModel)]="email"
+      placeholder="Enter Email"
+    />
+
+    <label>Password</label>
+    <input
+      type="password"
+      [(ngModel)]="password"
+      placeholder="Password"
+      (keyup.enter)="submit()"
+    />
+
+    @if (error()) {
+      <p class="error">{{ error() }}</p>
+    }
+
+    <button
+      class="primary full"
+      (click)="submit()"
+      [disabled]="loading()"
+    >
+      {{ loading() ? 'Signing in...' : 'Sign in' }}
+    </button>
+
+    <p class="switch">
+      No account?
+      <a routerLink="/register">Create one</a>
+    </p>
+  </div>
+</div>

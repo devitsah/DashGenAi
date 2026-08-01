@@ -1,0 +1,97 @@
+<div class="viz-card">
+
+  <!-- Header -->
+  <div class="viz-header">
+    <div class="viz-title-block">
+      <h2 class="viz-title">Visualization Matrix</h2>
+      <span class="viz-type-badge" *ngIf="hasData">
+        {{ (state.lastResult()?.intentSummary?.widgetType ?? resolvedType) | titlecase }}
+      </span>
+    </div>
+
+    <!-- Tab switcher -->
+    <div class="tab-bar" *ngIf="hasData">
+      <button class="tab-btn" [class.active]="activeTab === 'preview'" (click)="setTab('preview')">
+        ▣ Preview
+      </button>
+      <button class="tab-btn" [class.active]="activeTab === 'query'" (click)="setTab('query')">
+        ⌥ Query
+      </button>
+    </div>
+  </div>
+
+  <!-- No data state -->
+  <div class="empty-state" *ngIf="!hasData">
+    <span class="empty-icon">📊</span>
+    <p>No data yet — complete step 2 (Data Connections) first.</p>
+  </div>
+
+  <!-- Chart type switcher -->
+  <div class="chart-type-row" *ngIf="hasData && activeTab === 'preview'">
+    <span class="chart-type-label">View as:</span>
+    <button
+      *ngFor="let ct of chartTypes"
+      class="ct-chip"
+      [class.active]="chartOverride === ct.value"
+      (click)="setChartType(ct.value)">
+      {{ ct.label }}
+    </button>
+  </div>
+
+  <!-- ── PREVIEW TAB ── -->
+  <ng-container *ngIf="hasData && activeTab === 'preview'">
+
+    <!-- Execution error -->
+    <div class="empty-state" *ngIf="executionError">
+      <span class="empty-icon">⚠️</span>
+      <p>{{ executionError }}</p>
+    </div>
+
+    <!-- Zero rows -->
+    <div class="empty-state" *ngIf="!executionError && isEmptyResult">
+      <span class="empty-icon">🗒️</span>
+      <p>The query ran successfully but returned no rows.</p>
+    </div>
+
+    <ng-container *ngIf="!executionError && !isEmptyResult">
+
+      <!-- KPI Card -->
+      <div class="kpi-box" *ngIf="isKpi">
+        <div class="kpi-value">{{ kpiValue }}</div>
+        <div class="kpi-label">{{ kpiLabel }}</div>
+      </div>
+
+      <!-- Chart (bar / line / pie) — #chartEl must be inside *ngIf so it only
+           exists when isChartType is true; ngAfterViewChecked detects it then -->
+      <div #chartEl class="chart-area" *ngIf="isChartType"></div>
+
+      <!-- Table -->
+      <div class="table-wrap" *ngIf="isTable">
+        <table class="data-table">
+          <thead>
+            <tr><th *ngFor="let c of tableColumns">{{ c }}</th></tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of tableRows">
+              <td *ngFor="let c of tableColumns">{{ row[c] }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </ng-container>
+
+  </ng-container>
+
+  <!-- ── QUERY TAB ── -->
+  <ng-container *ngIf="hasData && activeTab === 'query'">
+    <div class="query-panel">
+      <div class="query-toolbar">
+        <span class="query-label">Generated SQL</span>
+        <button class="copy-btn" (click)="copyQuery()">{{ copyStatus }}</button>
+      </div>
+      <pre class="sql-block"><code>{{ sql || 'No SQL available.' }}</code></pre>
+    </div>
+  </ng-container>
+
+</div>

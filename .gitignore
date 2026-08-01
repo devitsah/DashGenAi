@@ -1,0 +1,145 @@
+###############################################################################
+# Visual Studio / .NET
+###############################################################################
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+build/
+artifacts/
+publish/
+
+# Test Results
+TestResults/
+*.trx
+*.coverage
+*.coveragexml
+
+# Logs
+*.log
+
+# Visual Studio cache
+.vs/
+
+# Rider
+.idea/
+
+# VS Code
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+###############################################################################
+# ASP.NET Core
+###############################################################################
+
+# Secrets
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.local.json
+
+# User secrets
+secrets.json
+
+# IIS
+wwwroot/uploads/
+
+###############################################################################
+# NuGet
+###############################################################################
+
+*.nupkg
+*.snupkg
+packages/
+
+# Uncomment if you don't want to cache packages locally
+# .nuget/
+
+###############################################################################
+# Entity Framework
+###############################################################################
+
+Migrations/*Designer.cs
+*.dbmdl
+
+###############################################################################
+# Node / Angular
+###############################################################################
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Angular build
+dist/
+.angular/
+.cache/
+
+# Package manager
+package-lock.json.*
+yarn.lock.*
+pnpm-lock.yaml.*
+
+# Coverage
+coverage/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+###############################################################################
+# Environment Files
+###############################################################################
+
+.env
+.env.*
+!.env.example
+
+###############################################################################
+# Operating System
+###############################################################################
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+###############################################################################
+# Docker
+###############################################################################
+
+docker-compose.override.yml
+
+###############################################################################
+# Misc
+###############################################################################
+
+*.pid
+*.seed
+*.orig
+*.swp
+*.swo
+
+# Archives
+*.zip
+*.tar
+*.gz
+*.rar

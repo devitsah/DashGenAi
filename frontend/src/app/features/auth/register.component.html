@@ -1,0 +1,52 @@
+<div class="auth-page">
+  <div class="auth-card card">
+
+    <h2>Create your account</h2>
+
+    <p class="subtitle">
+      Start building dashboards from plain language.
+    </p>
+
+    <label>Name</label>
+    <input
+      type="text"
+      [(ngModel)]="name"
+      placeholder="Your name"
+    />
+
+    <label>Email</label>
+    <input
+      type="email"
+      [(ngModel)]="email"
+      placeholder="you@company.com"
+    />
+
+    <label>Password</label>
+    <input
+      type="password"
+      [(ngModel)]="password"
+      placeholder="At least 8 characters"
+      (keyup.enter)="submit()"
+    />
+
+    @if (error()) {
+      <p class="error">
+        {{ error() }}
+      </p>
+    }
+
+    <button
+      class="primary full"
+      (click)="submit()"
+      [disabled]="loading()"
+    >
+      {{ loading() ? 'Creating account...' : 'Create account' }}
+    </button>
+
+    <p class="switch">
+      Already have an account?
+      <a routerLink="/login">Sign in</a>
+    </p>
+
+  </div>
+</div>

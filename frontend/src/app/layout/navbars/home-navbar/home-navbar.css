@@ -1,0 +1,79 @@
+:host {
+  --font-sans-utility: "Segoe UI", Arial, sans-serif;
+  --hdr-bg: #ffffff;
+  --hdr-border: #d9d9d9;
+  --hdr-text-primary: #111827;
+  --hdr-text-muted: #6b7280;
+  --hdr-surface-pill: #f5f5f5;
+  --hdr-primary: #1677ff;
+  font-family: var(--font-sans-utility);
+}
+
+.workspace-header {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: var(--hdr-bg);;
+  box-sizing: border-box;
+}
+
+.header-meta-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-title {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--hdr-text-primary);
+}
+
+.count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  border-radius: 9px;
+  background: var(--hdr-surface-pill);
+  border: 1px solid var(--hdr-border);
+  color: var(--hdr-text-muted);
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.header-action-group {
+  display: flex;
+  align-items: center;
+}
+
+.btn {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: var(--hdr-primary);
+  border: 1px solid var(--hdr-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #0958d9;
+  border-color: #0958d9;
+}
+
+.btn-symbol {
+  font-size: 12px;
+  margin-right: 2px;
+}

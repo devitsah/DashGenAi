@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AI_Dashboard.Api/AI_Dashboard.Api.csproj" />
+    <Project Path="src/AI_Dashboard.Application/AI_Dashboard.Application.csproj" />
+    <Project Path="src/AI_Dashboard.Domain/AI_Dashboard.Domain.csproj" />
+    <Project Path="src/AI_Dashboard.Infrastructure/AI_Dashboard.Infrastructure.csproj" />
+    <Project Path="src/AI_Dashboard.Shared/AI_Dashboard.Shared.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,423 @@
+* {
+  font-size: 13px;
+  box-sizing: border-box;
+}
+ 
+.dashboard-viewport {
+  padding: 16px;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+ 
+.dashboard-top-panel {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 8px 4px;
+}
+ 
+.dashboard-top-panel-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+ 
+.dashboard-logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #5cafe7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+ 
+.dashboard-logo i {
+  font-size: 14px;
+  color: white;
+}
+ 
+.dashboard-content {
+  display: flex;
+  flex-direction: column;
+}
+ 
+.dashboard-title {
+  margin: 0;
+  font-size: 2.75vh;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+}
+ 
+.dashboard-description {
+  margin: 4px 0 0;
+  font-size: 15px;
+  color: #6b7280;
+}
+ 
+.dashboard-icon {
+  font-size: 25px;
+  color:  #5139da;
+}
+ 
+.preset-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  color: #5cafe7;
+  font-size: 14px;
+  font-weight: 500;
+}
+ 
+.preset-badge i {
+  font-size: 16px;
+  color: #5cafe7;
+}
+ 
+.grid-stack {
+  width: 100%;
+  min-height: 700px;
+}
+ 
+.grid-stack-item-content {
+  height: 100% !important;
+  border-radius: 6px;
+  overflow: hidden;
+  background: transparent;
+}
+
+
+
+.custom-widget-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  cursor: default;
+  border-bottom: 1px solid #d9d9d9;
+  background: #fafafa;
+}
+
+.widget-title {
+  font-weight: 600;
+  color: #111827;
+}
+
+.drag-handle-icon {
+  color: #9ca3af;
+}
+
+.widget-body-viewport {
+  flex: 1;
+  min-height: 0;
+  padding: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.kpi-display-box {
+  text-align: center;
+}
+
+.kpi-main-value {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1677ff;
+}
+
+.kpi-sub-text {
+  margin-top: 6px;
+  color: #6b7280;
+}
+
+.table-display-box {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  align-self: stretch;
+}
+
+.rendered-ui-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rendered-ui-table th {
+  background: #fafafa;
+  text-align: left;
+  padding: 10px;
+  border-bottom: 1px solid #d9d9d9;
+  color: #111827;
+  font-weight: 600;
+}
+
+.rendered-ui-table td {
+  padding: 10px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #111827;
+}
+
+.chart-mock-graphic {
+  width: 100%;
+  height: 100%;
+  min-height: 180px;
+  border: 1px dashed #d9d9d9;
+  background: #fafafa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #6b7280;
+  border-radius: 4px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+}
+
+.ai-metadata-footer {
+  padding: 8px 12px;
+  border-top: 1px solid #d9d9d9;
+  background: #fafafa;
+}
+
+.badge-trace-prompt {
+  color: #1677ff;
+}
+
+/* ==========================================================
+   Style presets
+   ========================================================== */
+
+/* ---- Power BI: explicit self-contained theme — white cards
+   everywhere, colour lives only in the data (KPI number, chart). ---- */
+.preset-powerbi {
+  background: #f5f5f5;
+}
+.preset-powerbi .dashboard-title { color: #111827; }
+.preset-powerbi .dashboard-description { color: #605e5c; }
+.preset-powerbi .preset-badge {
+  background: #fff4e5;
+  border: 1px solid #f6d9a8;
+  color: #e8a33d;
+}
+
+.preset-powerbi .custom-widget-card {
+  background: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.preset-powerbi .widget-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.preset-powerbi .widget-title { color: #252423; font-weight: 600; }
+
+.preset-powerbi .kpi-main-value { color: #f2c811; }
+.preset-powerbi .kpi-sub-text { color: #605e5c; }
+
+.preset-powerbi .rendered-ui-table th {
+  background: #f8f8f8;
+  color: #252423;
+}
+
+.preset-powerbi .rendered-ui-table td { color: #252423; }
+
+.preset-powerbi .badge-trace-prompt { color: #e8a33d; }
+
+/* ---- Grafana: dark canvas, flat dark panels, cyan/green accents ---- */
+.preset-grafana {
+  background: #111217;
+}
+
+.preset-grafana .dashboard-title { color: #d8d9da; }
+.preset-grafana .dashboard-description { color: #8e9297; }
+
+.preset-grafana .preset-badge {
+  background: #2c3f66;
+  border: 1px solid #3d5580;
+  color: #cfe0fb;
+}
+
+.preset-grafana .custom-widget-card {
+  background: #181b1f;
+  border: 1px solid #2c3235;
+  color: #d8d9da;
+}
+
+.preset-grafana .widget-header {
+  background: #212427;
+  border-bottom: 1px solid #2c3235;
+}
+
+.preset-grafana .widget-title { color: #d8d9da; }
+.preset-grafana .drag-handle-icon { color: #6c7176; }
+
+.preset-grafana .kpi-main-value { color: #73bf69; }
+.preset-grafana .kpi-sub-text { color: #8e9297; }
+
+.preset-grafana .rendered-ui-table th {
+  background: #212427;
+  color: #d8d9da;
+  border-bottom: 1px solid #2c3235;
+}
+
+.preset-grafana .rendered-ui-table td {
+  color: #c7c8ca;
+  border-bottom: 1px solid #2c3235;
+}
+
+.preset-grafana .chart-mock-graphic {
+  background: #212427;
+  border-color: #2c3235;
+  color: #8e9297;
+}
+
+.preset-grafana .ai-metadata-footer {
+  background: #212427;
+  border-top: 1px solid #2c3235;
+}
+
+.preset-grafana .badge-trace-prompt { color: #5794f2; }
+
+/* Per-widget-type accent — each widget type gets its own solid, fully
+   opaque card color (like a lit-up ops board), matching the reference
+   image: whole card colored, not just a header strip. */
+
+/* ---- KPI widget: solid opaque blue card, full-block like reference ---- */
+.preset-grafana .custom-widget-card[data-widget-type="kpi"] {
+  background: #1d4ed8;
+  border-color: #1741b0;
+}
+.preset-grafana .custom-widget-card[data-widget-type="kpi"] .widget-header {
+  background: #1741b0;
+  border-bottom-color: #123b8f;
+}
+.preset-grafana .custom-widget-card[data-widget-type="kpi"] .widget-title { color: #ffffff; }
+.preset-grafana .custom-widget-card[data-widget-type="kpi"] .kpi-main-value { color: #ffffff; }
+.preset-grafana .custom-widget-card[data-widget-type="kpi"] .kpi-sub-text { color: #bfdbfe; }
+.preset-grafana .custom-widget-card[data-widget-type="kpi"] .ai-metadata-footer {
+  background: #1741b0;
+  border-top-color: #123b8f;
+}
+
+/* ---- Table widget: solid opaque orange block (no dark bg showing through) ---- */
+.preset-grafana .custom-widget-card[data-widget-type="table"] {
+  background: #b45309;
+  border-color: #7c2d12;
+}
+.preset-grafana .custom-widget-card[data-widget-type="table"] .widget-header {
+  background: #9a3412;
+  border-bottom-color: #7c2d12;
+}
+.preset-grafana .custom-widget-card[data-widget-type="table"] .widget-title { color: #fff7ed; }
+.preset-grafana .custom-widget-card[data-widget-type="table"] .rendered-ui-table th {
+  background: #9a3412;
+  color: #fff7ed;
+  border-bottom-color: #7c2d12;
+}
+.preset-grafana .custom-widget-card[data-widget-type="table"] .rendered-ui-table td {
+  color: #ffedd5;
+  border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+.preset-grafana .custom-widget-card[data-widget-type="table"] .ai-metadata-footer {
+  background: #9a3412;
+  border-top-color: #7c2d12;
+}
+
+/* ---- Bar chart widget: solid opaque red card, full-block like reference ---- */
+.preset-grafana .custom-widget-card[data-widget-type="bar"] {
+  background: #dc2626;
+  border-color: #991b1b;
+}
+.preset-grafana .custom-widget-card[data-widget-type="bar"] .widget-header {
+  background: #991b1b;
+  border-bottom-color: #7f1d1d;
+}
+.preset-grafana .custom-widget-card[data-widget-type="bar"] .widget-title { color: #ffffff; }
+.preset-grafana .custom-widget-card[data-widget-type="bar"] .ai-metadata-footer {
+  background: #991b1b;
+  border-top-color: #7f1d1d;
+}
+
+/* ---- Line chart widget: solid opaque purple card, full-block like reference ---- */
+.preset-grafana .custom-widget-card[data-widget-type="line"] {
+  background: #7c3aed;
+  border-color: #5b21b6;
+}
+.preset-grafana .custom-widget-card[data-widget-type="line"] .widget-header {
+  background: #5b21b6;
+  border-bottom-color: #4c1d95;
+}
+.preset-grafana .custom-widget-card[data-widget-type="line"] .widget-title { color: #ffffff; }
+.preset-grafana .custom-widget-card[data-widget-type="line"] .ai-metadata-footer {
+  background: #5b21b6;
+  border-top-color: #4c1d95;
+}
+
+/* ---- Pie chart widget: solid opaque magenta card, full-block like reference ---- */
+.preset-grafana .custom-widget-card[data-widget-type="pie"] {
+  background: #db2777;
+  border-color: #9d174d;
+}
+.preset-grafana .custom-widget-card[data-widget-type="pie"] .widget-header {
+  background: #9d174d;
+  border-bottom-color: #831843;
+}
+.preset-grafana .custom-widget-card[data-widget-type="pie"] .widget-title { color: #ffffff; }
+.preset-grafana .custom-widget-card[data-widget-type="pie"] .ai-metadata-footer {
+  background: #9d174d;
+  border-top-color: #831843;
+}
+
+/* subtle glow so cards pop off the dark canvas like a lit-up ops board */
+.preset-grafana .custom-widget-card {
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+}
+
+/* ---- Custom: neutral slate + indigo accent, distinct from both above ---- */
+.preset-custom {
+  background: #eef0f4;
+}
+
+.preset-custom .preset-badge {
+  background: #eef2ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+}
+
+.preset-custom .custom-widget-card {
+  border-radius: 12px;
+  border: 1px solid #e2e2e9;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.preset-custom .widget-header {
+  background: #f4f4f8;
+  border-bottom: 1px solid #e2e2e9;
+}
+
+.preset-custom .kpi-main-value { color: #4338ca; }

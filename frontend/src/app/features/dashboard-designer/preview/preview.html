@@ -1,0 +1,135 @@
+<div class="preview-container" [ngClass]="'preset-' + state.style()">
+
+  <div class="preview-header">
+    <h4 class="title">Staging Preview</h4>
+    <p class="subtitle" *ngIf="hasWidgets">
+      {{ state.acceptedWidgets().length }} accepted widget{{ state.acceptedWidgets().length === 1 ? '' : 's' }} — drag to reorder, resize from corner
+    </p>
+    <p class="subtitle empty-hint" *ngIf="!hasWidgets">
+      No widgets accepted yet — go back to the AI Builder and accept some widgets.
+    </p>
+  </div>
+
+ <div class="grid-stack">
+  <div
+  *ngFor="let w of widgets; let i = index; trackBy: trackByWidgetId"
+  class="grid-stack-item"
+  [attr.gs-x]="layoutFor(w, i).x"
+  [attr.gs-y]="layoutFor(w, i).y"
+  [attr.gs-w]="layoutFor(w, i).w"
+  [attr.gs-h]="layoutFor(w, i).h"
+  [attr.data-widget-id]="w.id"
+>
+      <div
+        class="grid-stack-item-content widget-card"
+        [attr.data-widget-type]="w.widgetType"
+        [ngStyle]="isCustomStyle ? widgetCardStyle(w) : null"
+      >
+
+        <div class="widget-card-header">
+          <ng-container *ngIf="editingWidgetId !== w.id; else editMode">
+            <span class="widget-title" [style.color]="widgetTextColor(w)" [title]="w.title">{{ w.title }}</span>
+            <button
+              type="button"
+              class="rename-btn"
+              title="Rename widget"
+              (click)="startEdit(w)">
+              ✎
+            </button>
+            <button
+              type="button"
+              class="color-btn"
+              *ngIf="isCustomStyle"
+              title="Widget background color"
+              [class.has-color]="hasCustomColor(w)"
+              [style.color]="hasCustomColor(w) ? widgetColor(w) : null"
+              (click)="toggleColorPicker(w)">
+              🎨
+            </button>
+            <button
+              type="button"
+              class="delete-btn"
+              title="Delete widget"
+              (click)="deleteWidget(w)">
+              🗑
+            </button>
+          </ng-container>
+          <ng-template #editMode>
+            <input
+              class="widget-title-input"
+              [value]="w.title"
+              maxlength="100"
+              (blur)="saveEdit(w, $any($event.target).value)"
+              (keydown.enter)="saveEdit(w, $any($event.target).value)"
+              (keydown.escape)="cancelEdit()"
+              autofocus
+            />
+          </ng-template>
+          <span class="widget-type-badge">{{ w.widgetTypeLabel }}</span>
+        </div>
+
+        <!-- Custom style only: per-widget background color panel -->
+        <div class="color-panel" *ngIf="isCustomStyle && openColorPickerId === w.id">
+          <label class="color-panel-label">Background color</label>
+          <div class="color-panel-row">
+            <input
+              type="color"
+              class="color-swatch-input"
+              [value]="widgetColor(w)"
+              (input)="onColorPicked(w, $any($event.target).value)"
+            />
+            <input
+              type="text"
+              class="color-hex-input"
+              [value]="widgetColor(w)"
+              maxlength="7"
+              (change)="onColorPicked(w, $any($event.target).value)"
+            />
+          </div>
+          <div class="color-panel-actions">
+            <button type="button" class="color-panel-reset" *ngIf="hasCustomColor(w)" (click)="resetColor(w)">Reset</button>
+            <button type="button" class="color-panel-done" (click)="closeColorPicker()">Done</button>
+          </div>
+        </div>
+
+        <div class="widget-body">
+
+          <!-- No data -->
+          <div class="empty-widget" *ngIf="!w.rows.length">
+            <span>No data available</span>
+          </div>
+
+          <!-- KPI -->
+          <div class="kpi-box" *ngIf="w.rows.length && isKpi(w.widgetType)">
+            <div class="kpi-value" [style.color]="widgetTextColor(w)">{{ kpiValue(w) }}</div>
+            <div class="kpi-label" [style.color]="widgetTextColor(w)">{{ kpiLabel(w) }}</div>
+          </div>
+
+          <!-- Chart -->
+          <div
+            class="chart-area"
+            [attr.data-chart-id]="w.id"
+            *ngIf="w.rows.length && isChart(w.widgetType)">
+          </div>
+
+          <!-- Table -->
+          <div class="table-wrap" *ngIf="w.rows.length && isTable(w.widgetType)">
+            <table class="data-table">
+              <thead>
+                <tr><th *ngFor="let c of w.columns" [style.color]="widgetTextColor(w)">{{ c }}</th></tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of w.rows">
+                  <td *ngFor="let c of w.columns" [style.color]="widgetTextColor(w)">{{ row[c] }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="row-hint" *ngIf="w.rows.length > 8">{{ w.rows.length }} rows — scroll to see all</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

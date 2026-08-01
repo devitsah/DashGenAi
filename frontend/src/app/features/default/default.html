@@ -1,0 +1,66 @@
+<div class="dashboard-viewport" [ngClass]="'preset-' + currentPreset()" *ngIf="hasDefaultDashboard()">
+  <div class="dashboard-top-panel">
+    <div class="dashboard-top-panel-left">
+      <div class="dashboard-logo">
+        <i class="fa-solid fa-border-all"></i>
+      </div>
+      <div class="dashboard-content">
+        <h2 class="dashboard-title">{{ dashboardTitle() }}</h2>
+        <p class="dashboard-description">
+          {{ dashboardDescription() }}
+        </p>
+      </div>
+    </div>
+    <div class="preset-badge">
+      <i class="fa-solid fa-palette"></i>
+      <span>Style Mode: {{ currentPreset() }}</span>
+    </div>
+  </div>
+  <div class="grid-stack"></div>
+</div>
+
+<div class="no-default-banner" *ngIf="!hasDefaultDashboard()">
+  <p>You don't have a default dashboard set yet.</p>
+  <p>Open any dashboard and use "Set as Default" to have it show up here.</p>
+</div>
+
+<ng-template #widgetTemplate let-w>
+  <div class="custom-widget-card" [attr.data-widget-type]="w.type" [style.background]="currentPreset() === 'custom' && w.backgroundColor ? w.backgroundColor : null">
+    <div class="widget-header" [style.background]="customHeaderBg(w)">
+      <span class="widget-title" [style.color]="customTextColor(w)">{{ w.title }}</span>
+    </div>
+
+    <div class="widget-body-viewport">
+      <ng-container [ngSwitch]="w.type">
+
+        <div *ngSwitchCase="'kpi'" class="kpi-display-box">
+          <div class="kpi-main-value" [style.color]="customTextColor(w)">{{ kpiValue(w) }}</div>
+          <div class="kpi-main-label" [style.color]="customTextColor(w)">{{ kpiLabel(w) }}</div>
+        </div>
+
+        <div *ngSwitchCase="'table'" class="table-display-box">
+          <table class="rendered-ui-table">
+            <thead>
+              <tr><th *ngFor="let c of tableColumns(w)" [style.color]="customTextColor(w)" [style.background]="customHeaderBg(w)">{{ c }}</th></tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of w.rows">
+                <td *ngFor="let c of tableColumns(w)" [style.color]="customTextColor(w)">{{ row[c] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div *ngSwitchCase="'bar'" class="chart-container" [id]="'bar-' + w.id"></div>
+        <div *ngSwitchCase="'pie'" class="chart-container" [id]="'pie-' + w.id"></div>
+        <div *ngSwitchCase="'line'" class="chart-container" [id]="'line-' + w.id"></div>
+
+        <div *ngSwitchDefault class="unsupported-type-banner">Unknown widget type</div>
+      </ng-container>
+    </div>
+
+    <div class="ai-metadata-footer" *ngIf="w.traceability">
+      <span class="badge-trace-prompt" [style.color]="customTextColor(w)" [title]="w.traceability.sql">{{ w.traceability.prompt }}</span>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="header">
+    <div>
+      <h4>Generated SQL Query</h4>
+      <p>The exact query the AI generated for your request.</p>
+    </div>
+    <div class="actions" *ngIf="query">
+      <button class="btn btn-outline" (click)="copyQuery()">{{ copyStatus }}</button>
+    </div>
+  </div>
+
+  <div class="empty-state" *ngIf="!query">
+    No query generated yet — complete step 2 (Data Connections) first.
+  </div>
+
+  <div class="sql-card" *ngIf="query">
+    <div class="sql-header">
+      <span>SQL</span>
+      <span class="sql-badge">PostgreSQL</span>
+    </div>
+    <pre><code>{{ query }}</code></pre>
+  </div>
+</div>

@@ -1,0 +1,19 @@
+<div class="card">
+  <div class="header">
+    <h2 class="title">AI Analysis</h2>
+    <p class="subtitle">Extracted intent, metrics, and dimensions from your request</p>
+  </div>
+
+  <div class="empty-state" *ngIf="!hasResult">
+    <span>No analysis yet — complete step 2 (Data Connections) first.</span>
+  </div>
+
+  <div class="rows" *ngIf="hasResult">
+    <div class="row" *ngFor="let row of rows">
+      <div class="label">{{ row.label }}</div>
+      <div class="value" [class.filled]="row.filled" [class.empty]="!row.filled">
+        {{ row.value }}
+      </div>
+    </div>
+  </div>
+</div>

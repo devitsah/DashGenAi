@@ -1,0 +1,88 @@
+:host {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    font-size: 12px;
+}
+
+.overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(2px);
+}
+
+.dialog {
+    width: 420px;
+    max-width: 90vw;
+    background: #ffffff;
+    border: 1px solid #d9d9d9;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    font-family: Inter, Arial, sans-serif;
+}
+
+h2 {
+    margin: 0 0 8px;
+    color: #111;
+    font-weight: 600;
+}
+
+p {
+    margin: 0 0 20px;
+    color: #666;
+}
+
+input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cfcfcf;
+    border-radius: 8px;
+    background: #fff;
+    color: #111;
+    box-sizing: border-box;
+    transition: border-color .2s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #000;
+}
+
+.buttons {
+    margin-top: 24px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+button {
+    min-width: 90px;
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: 1px solid #000;
+    background: #fff;
+    color: #000;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s ease;
+}
+
+button:hover {
+    background: #000;
+    color: #fff;
+}
+
+button:last-child {
+    border-color: #bdbdbd;
+    color: #555;
+}
+
+button:last-child:hover {
+    background: #f5f5f5;
+    color: #111;
+}

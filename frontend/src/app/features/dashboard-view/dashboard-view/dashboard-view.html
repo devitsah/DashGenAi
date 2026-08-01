@@ -1,0 +1,26 @@
+<div class="dashboard-shell">
+  <div class="top-navbar">
+    <div class="breadcrumb-section">
+      <span class="back-btn" routerLink="/homepage/DashboardHome" routerLinkActive="active">←</span>
+      <span class="breadcrumb" routerLink="/homepage/DashboardHome" routerLinkActive="active">Dashboards</span>
+      <span class="separator">›</span>
+      <span class="dashboard-title">{{ title }}</span>
+    </div>
+    <div class="action-buttons">
+      <button class="action-btn" (click)="Set_Default()">Set Default</button>
+      <button class="action-btn" (click)="Clone_Dashboard()">Clone</button>
+      <button class="action-btn" (click)="Delete_Dashboard()">Delete</button>
+    </div>
+  </div>
+
+  <div class="dashboard-header">
+    <div class="tabs">
+      <button (click)="NavigateView()">View</button>
+      <button (click)="NavigateDesign()">Design</button>
+    </div>
+  </div>
+
+  <div class="dashboard-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

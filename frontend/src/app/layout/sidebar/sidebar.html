@@ -1,0 +1,35 @@
+<aside class="sidebar">
+
+  <div class="brand-header">
+    <span class="brand-name">AIDashboard</span>
+  </div>
+
+  <nav class="nav-menu">
+    <a routerLink="DefaultDashboard" routerLinkActive="active" class="menu-item">
+      <span class="item-label">Home</span>
+    </a>
+
+    <a routerLink="DashboardHome" routerLinkActive="active" class="menu-item">
+      <span class="item-label">Dashboards</span>
+    </a>
+
+    <a routerLink="AIBuilder" routerLinkActive="active" class="menu-item">
+      <span class="item-label">AI Builder</span>
+    </a>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="user-profile">
+      <div class="user-avatar" [attr.aria-label]="name">{{ initials }}</div>
+      <div class="user-details">
+        <div class="user-name" [title]="name">{{ name }}</div>
+        <div class="user-email" [title]="email">{{ email }}</div>
+      </div>
+    </div>
+    <button class="btn btn-action-logout" (click)="logout()" aria-label="Sign out">
+      <span class="logout-symbol">⎋</span>
+      <span>Sign Out</span>
+    </button>
+  </div>
+
+</aside>

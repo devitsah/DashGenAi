@@ -1,0 +1,110 @@
+<div class="chat-container">
+  <header class="chat-header">
+    <h1 class="chat-title">AI Dashboard Builder</h1>
+    <p class="chat-subtitle">Describe what you want to visualize. Accept widgets to add them to your dashboard.</p>
+  </header>
+
+  <main class="chat-box" role="log" aria-label="Chat history">
+    <div
+      *ngFor="let message of messages"
+      [ngClass]="['message-bubble', message.role]">
+
+      <div class="message-content">
+        <span class="message-text">{{ message.text }}</span>
+
+        <!-- Clarification / suggestion chips -->
+        <div class="option-chips" *ngIf="message.options?.length">
+          <button type="button" class="chip"
+            *ngFor="let opt of message.options"
+            (click)="send(opt)">{{ opt }}</button>
+        </div>
+
+        <!-- KPI Card preview -->
+        <div class="widget-preview kpi-preview" *ngIf="message.previewRows?.length && isKpi(message.widgetType)">
+          <div class="kpi-card">
+            <div class="kpi-card-value">{{ kpiValue(message.previewRows!) }}</div>
+            <div class="kpi-card-label">{{ kpiLabel(message.previewRows!) }}</div>
+          </div>
+        </div>
+
+        <!-- Chart preview -->
+        <div class="widget-preview chart-preview" *ngIf="message.previewRows?.length && isChart(message.widgetType)">
+          <div
+            #chartCanvas
+            class="inline-chart-canvas"
+            [attr.data-chart-id]="message.chartId || null">
+          </div>
+        </div>
+
+        <!-- Table preview -->
+        <div class="widget-preview table-preview" *ngIf="message.previewRows?.length && isTable(message.widgetType)">
+          <div class="inline-table-wrap">
+            <table class="inline-table">
+              <thead>
+                <tr><th *ngFor="let c of message.previewColumns">{{ c }}</th></tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of message.previewRows">
+                  <td *ngFor="let c of message.previewColumns">{{ row[c] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SQL disclosure -->
+        <details class="sql-disclosure" *ngIf="message.sql">
+          <summary>View Query</summary>
+          <pre class="sql-pre">{{ message.sql }}</pre>
+        </details>
+
+        <!-- Accept / Reject actions -->
+        <div class="widget-actions" *ngIf="message.result && !message.accepted && !message.rejected">
+          <button type="button" class="btn-accept" (click)="accept(message)">✓ Accept</button>
+          <button type="button" class="btn-reject" (click)="reject(message)">✕ Reject</button>
+        </div>
+        <div class="widget-status accepted" *ngIf="message.accepted">✓ Added to dashboard</div>
+        <div class="widget-status rejected" *ngIf="message.rejected">✕ Rejected</div>
+      </div>
+    </div>
+
+    <!-- Thinking indicator -->
+    <div class="message-bubble assistant" *ngIf="isBusy">
+      <div class="message-content typing">Thinking&hellip;</div>
+    </div>
+  </main>
+
+  <!-- Chart type selector -->
+  <div class="widget-type-row" *ngIf="!state.awaitingClarification()">
+    <span class="widget-type-label">Chart type (optional):</span>
+    <button
+      type="button"
+      class="type-chip"
+      *ngFor="let t of widgetTypeChoices"
+      [class.active]="selectedWidgetType === t"
+      [disabled]="isBusy"
+      (click)="toggleWidgetType(t)">{{ t }}</button>
+  </div>
+
+  <footer class="chat-input-area">
+    <textarea
+      rows="1"
+      [(ngModel)]="inputText"
+      [disabled]="isBusy"
+      placeholder="Describe your metric or chart..."
+      (keydown.enter)="$event.preventDefault(); send()">
+    </textarea>
+    <button
+      type="button"
+      [disabled]="!inputText?.trim() || isBusy"
+      (click)="send()">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+        fill="none" stroke="currentColor" stroke-width="2.5"
+        stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+      <span>Send</span>
+    </button>
+  </footer>
+</div>

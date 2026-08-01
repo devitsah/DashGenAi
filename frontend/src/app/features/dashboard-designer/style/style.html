@@ -1,0 +1,148 @@
+<div class="step-view-wrapper">
+
+  <div class="view-intro-group">
+    <h2 class="view-heading">Set Up Your Dashboard</h2>
+    <p class="view-subtext">Create a new dashboard or pick an existing one to add widgets to.</p>
+  </div>
+
+  <!-- Mode toggle -->
+  <div class="mode-toggle" *ngIf="!dashboardReady">
+    <button class="mode-btn" [class.active]="mode === 'create'" (click)="setMode('create')">
+      + Create New
+    </button>
+    <button class="mode-btn" [class.active]="mode === 'existing'" (click)="setMode('existing')">
+      Use Existing
+    </button>
+  </div>
+
+  <div class="two-col-layout">
+
+    <!-- ── CREATE MODE ── -->
+    <ng-container *ngIf="mode === 'create' && !dashboardReady">
+
+      <!-- Left: create form -->
+      <div class="form-panel">
+        <div class="form-field">
+          <label class="form-label">Dashboard Name <span class="required">*</span></label>
+          <input
+            class="form-input"
+            type="text"
+            [(ngModel)]="dashboardName"
+            placeholder="e.g. Sales Overview Q4"
+            maxlength="100"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Description <span class="form-optional">(optional)</span></label>
+          <textarea
+            class="form-textarea"
+            [(ngModel)]="dashboardDescription"
+            placeholder="Brief description of this dashboard..."
+            rows="3"
+            maxlength="300"
+          ></textarea>
+        </div>
+
+        <div class="form-field">
+          <label class="form-label">Style</label>
+          <select class="form-select" [(ngModel)]="dashboardStyle">
+            <option *ngFor="let s of styleOptions" [value]="s.value">{{ s.label }}</option>
+          </select>
+        </div>
+
+        <div class="form-error" *ngIf="createError">{{ createError }}</div>
+
+        <button
+          class="btn-create"
+          [disabled]="!dashboardName.trim() || creating"
+          (click)="createDashboard()">
+          {{ creating ? 'Creating...' : '+ Create Dashboard' }}
+        </button>
+      </div>
+
+      <!-- Right: preview of what will be created -->
+      <div class="right-panel">
+        <div class="right-panel-header">
+          <span class="right-panel-style-label">New Dashboard</span>
+          <span class="right-panel-hint">preview</span>
+        </div>
+        <div class="preview-card" *ngIf="dashboardName.trim()">
+          <div class="preview-name">{{ dashboardName }}</div>
+          <div class="preview-meta">{{ styleLabel(dashboardStyle) }}</div>
+          <div class="preview-desc" *ngIf="dashboardDescription.trim()">{{ dashboardDescription }}</div>
+        </div>
+        <p class="empty-hint" *ngIf="!dashboardName.trim()">Fill in the name to see a preview.</p>
+      </div>
+
+    </ng-container>
+
+    <!-- ── EXISTING MODE ── -->
+    <ng-container *ngIf="mode === 'existing' && !dashboardReady">
+
+      <!-- Left: search + list -->
+      <div class="existing-list">
+        <input
+          class="search-input"
+          type="text"
+          [(ngModel)]="searchQuery"
+          placeholder="🔍  Search dashboards..."
+        />
+        <p class="existing-hint" *ngIf="loadingExisting">Loading dashboards…</p>
+        <p class="existing-hint" *ngIf="!loadingExisting && existingDashboards.length === 0">
+          No dashboards found. Switch to Create New.
+        </p>
+        <p class="existing-hint" *ngIf="!loadingExisting && existingDashboards.length > 0 && filteredDashboards.length === 0">
+          No dashboards match "{{ searchQuery }}".
+        </p>
+        <div
+          *ngFor="let d of filteredDashboards"
+          class="existing-card"
+          [class.is-selected]="selectedExistingId === d.id"
+          (click)="selectedExistingId = d.id"
+        >
+          <div class="existing-card-name">{{ d.name }}</div>
+          <div class="existing-card-meta">
+            {{ styleLabel(d.dashboardStyle) }} &nbsp;·&nbsp;
+            {{ d.widgets?.length ?? 0 }} widget{{ (d.widgets?.length ?? 0) === 1 ? '' : 's' }}
+          </div>
+          <div class="existing-card-desc" *ngIf="d.description">{{ d.description }}</div>
+        </div>
+      </div>
+
+      <!-- Right: confirm selection -->
+      <div class="right-panel">
+        <div class="right-panel-header">
+          <span class="right-panel-style-label">Use Existing</span>
+          <span class="right-panel-hint">select a dashboard</span>
+        </div>
+        <ng-container *ngIf="selectedExistingId">
+          <div class="selected-existing-preview">
+            <div class="sep-name">{{ selectedExistingName }}</div>
+            <div class="sep-sub">Widgets will be added to this dashboard</div>
+          </div>
+          <button class="btn-create" (click)="useExisting()">
+            Use This Dashboard →
+          </button>
+        </ng-container>
+        <p class="empty-hint" *ngIf="!selectedExistingId">
+          Pick a dashboard from the list on the left.
+        </p>
+      </div>
+
+    </ng-container>
+
+    <!-- ── READY (both modes) ── -->
+    <div class="ready-panel" *ngIf="dashboardReady">
+      <div class="created-badge">
+        <span class="badge-icon">✓</span>
+        <span>
+          {{ mode === 'existing' ? 'Using: ' + selectedExistingName : '"' + state.createdDashboardName() + '" created' }}
+          — proceed to the AI Builder
+        </span>
+      </div>
+    </div>
+
+  </div>
+
+</div>

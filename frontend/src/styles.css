@@ -1,0 +1,55 @@
+/* You can add global styles to this file, and also import other style files */
+@import "gridstack/dist/gridstack.min.css";
+body{
+    margin: 0%;
+    padding: 0%;
+}
+:root {
+    --bg-main: #ffffff;
+    --bg-secondary: #fafafa;
+    --border-color: #000000;
+    --border-muted: #e5e5e5;
+    --text-main: #000000;
+    --text-muted: #737373;
+    --text-on-dark: #ffffff;
+    --radius-sharp: 4px;
+    --radius-card: 8px;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* Compact SweetAlert2 popups */
+.swal-compact {
+    font-size: 13px !important;
+    padding: 16px !important;
+}
+.swal-compact .swal2-title {
+    font-size: 15px !important;
+    padding: 0 0 8px !important;
+}
+.swal-compact .swal2-html-container,
+.swal-compact .swal2-content {
+    font-size: 13px !important;
+    margin: 0 0 10px !important;
+}
+.swal-compact .swal2-input {
+    font-size: 13px !important;
+    height: 34px !important;
+    margin: 6px 0 !important;
+}
+.swal-compact .swal2-actions {
+    margin: 8px 0 0 !important;
+    gap: 8px !important;
+}
+.swal-compact .swal2-confirm,
+.swal-compact .swal2-cancel {
+    font-size: 12px !important;
+    padding: 6px 16px !important;
+}

@@ -1,0 +1,232 @@
+<div class="awd-backdrop" *ngIf="open" (click)="close()">
+  <div class="awd-modal" (click)="$event.stopPropagation()">
+
+    <div class="awd-header">
+      <h3>Add Widget</h3>
+      <button type="button" class="awd-close" (click)="close()"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <div class="awd-body">
+
+      <!-- Chart type picker -->
+      <div class="awd-type-grid">
+        <button
+          type="button"
+          *ngFor="let t of chartTypes"
+          class="awd-type-card"
+          [class.active]="chartType === t.value"
+          (click)="selectType(t.value)"
+        >
+          <i [class]="t.icon"></i>
+          <span class="awd-type-label">{{ t.label }}</span>
+        </button>
+      </div>
+
+      <div class="awd-section">
+        <h4><i class="fa-solid fa-circle-info"></i> Widget Information</h4>
+
+        <div class="awd-grid-2">
+          <div class="awd-field">
+            <label>Widget Name <span class="req">*</span></label>
+            <input class="awd-input" type="text" [(ngModel)]="widgetName" placeholder="e.g. Revenue by Region" maxlength="100" />
+          </div>
+
+          <div class="awd-field" *ngIf="needsDataSource">
+            <label>Data Source <span class="req">*</span></label>
+            <select class="awd-input" [(ngModel)]="table">
+              <option *ngFor="let t of tables()" [value]="t.table">{{ t.table }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="awd-grid-2" *ngIf="needsDataSource">
+          <div class="awd-field" *ngIf="needsGroupBy">
+            <label>Group By <span class="req">*</span></label>
+            <select class="awd-input" [(ngModel)]="groupByColumn">
+              <option value="" disabled>Select column</option>
+              <option *ngFor="let c of selectedTableColumns" [value]="c.name">{{ c.name }}</option>
+            </select>
+          </div>
+
+          <div class="awd-field" *ngIf="isTimeSeries">
+            <label>Time Column <span class="req">*</span></label>
+            <select class="awd-input" [(ngModel)]="timeColumn">
+              <option value="" disabled>Select column</option>
+              <option *ngFor="let c of selectedTableColumns" [value]="c.name">{{ c.name }}</option>
+            </select>
+          </div>
+
+          <div class="awd-field" *ngIf="isTimeSeries">
+            <label>Interval</label>
+            <select class="awd-input" [(ngModel)]="interval">
+              <option *ngFor="let i of intervals" [value]="i">{{ i }}</option>
+            </select>
+          </div>
+
+          <div class="awd-field" *ngIf="needsMetric">
+            <label>Aggregation <span class="req">*</span></label>
+            <select class="awd-input" [(ngModel)]="aggregation">
+              <option *ngFor="let a of aggregations" [value]="a">{{ a }}</option>
+            </select>
+          </div>
+
+          <div class="awd-field" *ngIf="needsMetric && aggregation !== 'COUNT'">
+            <label>Metric Column <span class="req">*</span></label>
+            <select class="awd-input" [(ngModel)]="metricColumn">
+              <option value="" disabled>Select column</option>
+              <option *ngFor="let c of numericColumns" [value]="c.name">{{ c.name }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="awd-field" *ngIf="isHtml">
+          <label>HTML Content <span class="req">*</span></label>
+          <textarea class="awd-input awd-textarea" rows="6" [(ngModel)]="htmlContent"></textarea>
+        </div>
+      </div>
+
+      <!-- Display Options: contents vary per chart type -->
+      <div class="awd-section" *ngIf="!isHtml">
+        <h4><i class="fa-solid fa-gear"></i> Display Options</h4>
+
+        <ng-container *ngIf="showChartFamilyOptions">
+          <div class="awd-toggle-grid">
+            <label class="awd-toggle" [class.active]="gridLines">
+              <span class="awd-toggle-text"><strong>Grid Lines</strong><small>Show chart gridlines</small></span>
+              <input type="checkbox" [(ngModel)]="gridLines" />
+              <span class="awd-switch"></span>
+            </label>
+            <label class="awd-toggle" [class.active]="dataLabels">
+              <span class="awd-toggle-text"><strong>Data Labels</strong><small>Show value labels</small></span>
+              <input type="checkbox" [(ngModel)]="dataLabels" />
+              <span class="awd-switch"></span>
+            </label>
+            <label class="awd-toggle" [class.active]="legend">
+              <span class="awd-toggle-text"><strong>Legend</strong><small>Show chart legend</small></span>
+              <input type="checkbox" [(ngModel)]="legend" />
+              <span class="awd-switch"></span>
+            </label>
+            <label class="awd-toggle" *ngIf="showStackedOption" [class.active]="stacked">
+              <span class="awd-toggle-text"><strong>Stacked</strong><small>Stack the series</small></span>
+              <input type="checkbox" [(ngModel)]="stacked" />
+              <span class="awd-switch"></span>
+            </label>
+          </div>
+          <div class="awd-grid-2">
+            <div class="awd-field">
+              <label>Legend Position</label>
+              <select class="awd-input" [(ngModel)]="legendPosition">
+                <option *ngFor="let p of legendPositions" [value]="p">{{ p }}</option>
+              </select>
+            </div>
+            <div class="awd-field">
+              <label>Color Theme</label>
+              <select class="awd-input" [(ngModel)]="colorTheme">
+                <option *ngFor="let c of colorThemes" [value]="c">{{ c }}</option>
+              </select>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="showPieOptions">
+          <div class="awd-toggle-grid">
+            <label class="awd-toggle" [class.active]="legend">
+              <span class="awd-toggle-text"><strong>Legend</strong><small>Show chart legend</small></span>
+              <input type="checkbox" [(ngModel)]="legend" />
+              <span class="awd-switch"></span>
+            </label>
+            <label class="awd-toggle" [class.active]="dataLabels">
+              <span class="awd-toggle-text"><strong>Data Labels</strong><small>Show % on slices</small></span>
+              <input type="checkbox" [(ngModel)]="dataLabels" />
+              <span class="awd-switch"></span>
+            </label>
+          </div>
+          <div class="awd-grid-2">
+            <div class="awd-field">
+              <label>Legend Position</label>
+              <select class="awd-input" [(ngModel)]="legendPosition">
+                <option *ngFor="let p of legendPositions" [value]="p">{{ p }}</option>
+              </select>
+            </div>
+            <div class="awd-field">
+              <label>Color Theme</label>
+              <select class="awd-input" [(ngModel)]="colorTheme">
+                <option *ngFor="let c of colorThemes" [value]="c">{{ c }}</option>
+              </select>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="showKpiOptions">
+          <div class="awd-grid-2">
+            <div class="awd-field">
+              <label>Prefix <span class="hint">(e.g. $)</span></label>
+              <input class="awd-input" type="text" [(ngModel)]="valuePrefix" maxlength="5" />
+            </div>
+            <div class="awd-field">
+              <label>Suffix <span class="hint">(e.g. %)</span></label>
+              <input class="awd-input" type="text" [(ngModel)]="valueSuffix" maxlength="5" />
+            </div>
+            <div class="awd-field">
+              <label>Color Theme</label>
+              <select class="awd-input" [(ngModel)]="colorTheme">
+                <option *ngFor="let c of colorThemes" [value]="c">{{ c }}</option>
+              </select>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="showGaugeOptions">
+          <div class="awd-grid-2">
+            <div class="awd-field">
+              <label>Min Value</label>
+              <input class="awd-input" type="number" [(ngModel)]="minValue" />
+            </div>
+            <div class="awd-field">
+              <label>Max Value</label>
+              <input class="awd-input" type="number" [(ngModel)]="maxValue" />
+            </div>
+            <div class="awd-field">
+              <label>Color Theme</label>
+              <select class="awd-input" [(ngModel)]="colorTheme">
+                <option *ngFor="let c of colorThemes" [value]="c">{{ c }}</option>
+              </select>
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="showTableOptions">
+          <div class="awd-toggle-grid">
+            <label class="awd-toggle" [class.active]="showRowNumbers">
+              <span class="awd-toggle-text"><strong>Row Numbers</strong><small>Show a # column</small></span>
+              <input type="checkbox" [(ngModel)]="showRowNumbers" />
+              <span class="awd-switch"></span>
+            </label>
+            <label class="awd-toggle" [class.active]="stripedRows">
+              <span class="awd-toggle-text"><strong>Striped Rows</strong><small>Alternate row shading</small></span>
+              <input type="checkbox" [(ngModel)]="stripedRows" />
+              <span class="awd-switch"></span>
+            </label>
+          </div>
+          <div class="awd-grid-2">
+            <div class="awd-field">
+              <label>Page Size</label>
+              <input class="awd-input" type="number" [(ngModel)]="pageSize" min="5" max="100" />
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <p class="awd-error" *ngIf="error()">{{ error() }}</p>
+    </div>
+
+    <div class="awd-footer">
+      <button type="button" class="awd-btn awd-btn-ghost" (click)="close()">Cancel</button>
+      <button type="button" class="awd-btn awd-btn-primary" [disabled]="!canSave || saving()" (click)="save()">
+        <i class="fa-solid fa-spinner fa-spin" *ngIf="saving()"></i>
+        {{ saving() ? 'Adding…' : 'Add Widget' }}
+      </button>
+    </div>
+
+  </div>
+</div>

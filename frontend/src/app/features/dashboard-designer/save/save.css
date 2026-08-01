@@ -1,0 +1,82 @@
+:host {
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+.overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+}
+.modal {
+  width: 340px;
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 24px;
+}
+.modal h4 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: #111827;
+}
+.subtitle {
+  margin: 4px 0 20px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #6b7280;
+}
+.form-group {
+  margin-bottom: 14px;
+}
+label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+}
+input,
+textarea {
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #111827;
+  background: #ffffff;
+  box-sizing: border-box;
+}
+input {
+  height: 34px;
+  padding: 0 10px;
+}
+textarea {
+  padding: 10px;
+  min-height: 80px;
+  resize: vertical;
+}
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: #1677ff;
+}
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+.primary {
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid #1677ff;
+  border-radius: 4px;
+  background: #1677ff;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.primary:hover {
+  background: #0958d9;
+  border-color: #0958d9;
+}
